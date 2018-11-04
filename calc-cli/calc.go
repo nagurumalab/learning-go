@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/golang-collections/collections"
 )
 
 func main() {
