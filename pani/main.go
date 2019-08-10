@@ -17,10 +17,11 @@ func main() {
 	ctx := context.Background()
 
 	conf := &oauth2.Config{
-		ClientID: "a0ecb701-3f8e-4a64-b626-d20b142942dd",
+		ClientID: "c7bcff77-9645-458a-a39e-f5d3c2664ea8",
 		//		ClientSecret: "DBM5A/pYGOzfD/Atodq*?oZi2uHT6hL0",
-		Scopes:   []string{"Tasks.Read", "Tasks.Read.Shared", "Tasks.ReadWrite", "Tasks.ReadWrite.Shared", "User.Read"},
-		Endpoint: microsoft.AzureADEndpoint("common"),
+		Scopes:      []string{"Tasks.Read", "Tasks.Read.Shared", "Tasks.ReadWrite", "Tasks.ReadWrite.Shared", "User.Read"},
+		Endpoint:    microsoft.AzureADEndpoint("common"),
+		RedirectURL: "https://login.microsoftonline.com/common/oauth2/nativeclient",
 	}
 
 	// Redirect user to consent page to ask for permission
@@ -47,14 +48,12 @@ func main() {
 	}
 
 	client := conf.Client(ctx, tok)
-	client.Get("https://graph.microsoft.com/beta/me/outlook/taskFolders")
-
-	resp, err := http.Get("http://gobyexample.com")
+	resp, err := client.Get("https://graph.microsoft.com/beta/me/outlook/taskFolders")
 	if err != nil {
 		panic(err)
 	}
 	defer resp.Body.Close()
-
 	var jsonBody map[string]interface{}
 	json.NewDecoder(resp.Body).Decode(&jsonBody)
+	fmt.Println(json.MarshalIndent(jsonBody, "", ""))
 }
