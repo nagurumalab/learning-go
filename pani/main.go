@@ -36,12 +36,12 @@ func UserOAuthClient(ctx context.Context, config *oauth2.Config) (client *http.C
 func getCachedToken() (*oauth2.Token, error) {
 	tk := new(oauth2.Token)
 	if _, err := os.Stat(tokenStore); os.IsNotExist(err) {
-		log.Fatal(err)
+		log.Print(err)
 		return nil, err
 	}
 	jToken, err := ioutil.ReadFile(tokenStore)
 	if err != nil {
-		log.Fatal(err)
+		log.Print(err)
 		return nil, err
 	}
 	err = json.Unmarshal(jToken, tk)
