@@ -118,9 +118,9 @@ func main() {
 		panic(err)
 	}
 	defer resp.Body.Close()
-	var jsonBody map[string]interface{}
-	json.NewDecoder(resp.Body).Decode(&jsonBody)
-
-	jd, err := json.MarshalIndent(jsonBody, "", "")
+	var taskFolders map[string]interface{}
+	json.NewDecoder(resp.Body).Decode(&taskFolders)
+	jd, err := json.MarshalIndent(taskFolders, "", "")
 	fmt.Println(string(jd))
+
 }

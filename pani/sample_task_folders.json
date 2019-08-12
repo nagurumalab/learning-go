@@ -1,0 +1,46 @@
+{
+    "@odata.context": "https://graph.microsoft.com/beta/$metadata#users('siva.bala.89%40hotmail.com')/outlook/taskFolders",
+    "value": [{
+            "changeKey": "96vfp0FQbECmQyUyfjFp7QAClUM24g==",
+            "id": "AQMkADAwATZiZmYAZC1iZWJiAC0yMTEANS0wMAItMDAKAC4AAAO7TButbej9QoS8QdzUxj6hAQD3q9_nQVBsQKZDJTJ_MWntAAACARIAAAA=",
+            "isDefaultFolder": true,
+            "name": "Tasks",
+            "parentGroupKey": "0006f0b7-0000-0000-c000-000000000046"
+        },
+        {
+            "changeKey": "96vfp0FQbECmQyUyfjFp7QAClUM25A==",
+            "id": "AQMkADAwATZiZmYAZC1iZWJiAC0yMTEANS0wMAItMDAKAC4AAAO7TButbej9QoS8QdzUxj6hAQD3q9_nQVBsQKZDJTJ_MWntAAIOFTYxAAAA",
+            "isDefaultFolder": false,
+            "name": "🎬To Watch",
+            "parentGroupKey": "0006f0b7-0000-0000-c000-000000000046"
+        },
+        {
+            "changeKey": "96vfp0FQbECmQyUyfjFp7QAClUM25g==",
+            "id": "AQMkADAwATZiZmYAZC1iZWJiAC0yMTEANS0wMAItMDAKAC4AAAO7TButbej9QoS8QdzUxj6hAQD3q9_nQVBsQKZDJTJ_MWntAAHtOKA2AAAA",
+            "isDefaultFolder": false,
+            "name": "🏪Shopping",
+            "parentGroupKey": "0006f0b7-0000-0000-c000-000000000046"
+        },
+        {
+            "changeKey": "96vfp0FQbECmQyUyfjFp7QAClUM26A==",
+            "id": "AQMkADAwATZiZmYAZC1iZWJiAC0yMTEANS0wMAItMDAKAC4AAAO7TButbej9QoS8QdzUxj6hAQD3q9_nQVBsQKZDJTJ_MWntAAIUyiFIAAAA",
+            "isDefaultFolder": false,
+            "name": "👴3T",
+            "parentGroupKey": "0006f0b7-0000-0000-c000-000000000046"
+        },
+        {
+            "changeKey": "96vfp0FQbECmQyUyfjFp7QAClUM26g==",
+            "id": "AQMkADAwATZiZmYAZC1iZWJiAC0yMTEANS0wMAItMDAKAC4AAAO7TButbej9QoS8QdzUxj6hAQD3q9_nQVBsQKZDJTJ_MWntAAKO7_b7AAAA",
+            "isDefaultFolder": false,
+            "name": "📚To Read",
+            "parentGroupKey": "0006f0b7-0000-0000-c000-000000000046"
+        },
+        {
+            "changeKey": "96vfp0FQbECmQyUyfjFp7QAClUM27A==",
+            "id": "AQMkADAwATZiZmYAZC1iZWJiAC0yMTEANS0wMAItMDAKAC4AAAO7TButbej9QoS8QdzUxj6hAQD3q9_nQVBsQKZDJTJ_MWntAAIvh1a8AAAA",
+            "isDefaultFolder": false,
+            "name": "🖥️Links",
+            "parentGroupKey": "0006f0b7-0000-0000-c000-000000000046"
+        }
+    ]
+}
