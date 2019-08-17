@@ -1,4 +1,4 @@
-package task
+package todo
 
 //Task struct
 type Task struct {
