@@ -17,7 +17,9 @@ type Task struct {
 
 //Folder Task folders
 type Folder struct {
-	title string
+	id        string
+	Name      string
+	IsDefault bool
 }
 
 //Client struct to hold the client deals with api calls
@@ -41,8 +43,10 @@ func (c *Client) callAPI(method string, url string, payload map[string]interface
 	var err error
 	var jdata map[string]interface{}
 	switch method {
-	case "GET":resp, err = c.client.Get(url)
-	case "POST":resp, err = c.client.Get(url)
+	case "GET":
+		resp, err = c.client.Get(url)
+	case "POST":
+		resp, err = c.client.Get(url)
 	}
 	if err != nil {
 		panic(err)
@@ -55,5 +59,15 @@ func (c *Client) callAPI(method string, url string, payload map[string]interface
 //ListFolders lists all the folder for the user
 func (c Client) ListFolders() []Folder {
 	jdata := c.callAPI(URLS["ListFolders"].method, URLS["ListFolders"].url, nil)
-	for i, v := range jdata
+	jd := *interface{}(jdata).(*map[string]interface{})
+	folders := []Folder{}
+	for _, f := range jd["value"].([]interface{}) {
+		value := f.(map[string]interface{})
+		folders = append(folders, Folder{
+			id:        value["id"].(string),
+			Name:      value["name"].(string),
+			IsDefault: value["isDefaultFolder"].(bool),
+		})
+	}
+	return folders
 }
