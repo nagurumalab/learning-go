@@ -48,7 +48,6 @@ func (c *Client) callAPI(method string, url string, payload map[string]interface
 		panic(err)
 	}
 	defer resp.Body.Close()
-
 	json.NewDecoder(resp.Body).Decode(&jdata)
 	return &jdata
 }
@@ -56,5 +55,5 @@ func (c *Client) callAPI(method string, url string, payload map[string]interface
 //ListFolders lists all the folder for the user
 func (c Client) ListFolders() []Folder {
 	jdata := c.callAPI(URLS["ListFolders"].method, URLS["ListFolders"].url, nil)
-for 
+	for i, v := range jdata
 }
