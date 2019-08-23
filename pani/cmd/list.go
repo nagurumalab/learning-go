@@ -18,13 +18,15 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/nagurumalab/learning-go/pani/mstodo"
+
 	"github.com/spf13/cobra"
 )
 
 // listCmd represents the list command
-var listCmd = &cobra.Command{
-	Use:   "list",
-	Short: "A brief description of your command",
+var listTasks = &cobra.Command{
+	Use:   "lt",
+	Short: "Lists tasks",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
 
@@ -32,12 +34,26 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("list called")
+		fmt.Println("list tasks called")
+	},
+}
+
+var listFolders = &cobra.Command{
+	Use:   "lf",
+	Short: "Lists folders",
+	Long: `A longer description that spans multiple lines and likely contains examples
+and usage of using your command. For example:
+
+Cobra is a CLI library for Go that empowers applications.
+This application is a tool to generate the needed files
+to quickly create a Cobra application.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		mstodo.NewClient().ListFolders().Print()
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(listCmd)
+	rootCmd.AddCommand(listTasks, listFolders)
 
 	// Here you will define your flags and configuration settings.
 
@@ -48,4 +64,6 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// listCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+
+	listTasks.Flags().StringP("folder-name", "n", "", "Name of the folder to list the tasks")
 }
