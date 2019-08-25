@@ -71,4 +71,6 @@ func (f Folders) GetDefaultFolder() *Folder {
 	return nil
 }
 
-func (f Folder) GetTasks()
+func (f Folder) GetTasks() Tasks {
+	return Tasks{}
+}
