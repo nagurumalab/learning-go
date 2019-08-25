@@ -43,12 +43,32 @@ func (c Client) ListFolders() Folders {
 }
 
 //Print prints the folders struct to console
-func (f Folders) Print() {
-	// fmt.Println(f)
+func (f Folders) Print(detailed bool) {
+	var err error
 	for i, folder := range f.Folders {
-		_, err := fmt.Printf("%d. %s\n", i+1, folder.Name)
+		if detailed {
+
+			_, err = fmt.Printf("%d - %s\nDefaut: %t ID: %s\n\n",
+				i+1, folder.Name, folder.IsDefault, folder.id)
+		} else {
+			_, err = fmt.Printf("%d - %s\n", i+1, folder.Name)
+		}
+
 		if err != nil {
 			panic(err)
 		}
 	}
 }
+
+//GetDefaultFolder loops over and get the default folders
+//TODO: Cache the default folder id
+func (f Folders) GetDefaultFolder() *Folder {
+	for _, folder := range f.Folders {
+		if folder.IsDefault {
+			return &folder
+		}
+	}
+	return nil
+}
+
+func (f Folder) GetTasks()

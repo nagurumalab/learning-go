@@ -64,6 +64,6 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// listCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-
+	listFolders.Flags().BoolP("detailed", "d", false, "Show details of the folders")
 	listTasks.Flags().StringP("folder-name", "n", "", "Name of the folder to list the tasks")
 }
