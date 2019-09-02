@@ -2,7 +2,7 @@ package mstodo
 
 //Task struct
 type Task struct {
-	id      string
+	ID      string
 	Subject string
 	Body    struct {
 		contentType string
@@ -11,20 +11,20 @@ type Task struct {
 	CreatedDateTime string
 	DueDateTime     string
 	IsReminderOn    bool
-	parentFolderId  string
+	ParentFolderID  string
 	Status          string
 }
 
 //Tasks list of tasks
 type Tasks struct {
-	Tasks    []Task `json:value`
-	nextLink string `json:"@odata.nextLink"`
+	Tasks    []Task `json:"value"`
+	NextLink string `json:"@odata.nextLink"`
 }
 
 //ListTasks lists tasks
-func (c Client) ListTasks(listID string) Tasks {
+func (t Tasks) ListTasks(listID string) []Task {
 	if listID != "" {
 		listID = ""
 	}
-	return Tasks{}
+	return Tasks{}.Tasks
 }

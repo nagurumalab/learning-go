@@ -3,55 +3,53 @@ package mstodo
 import (
 	"encoding/json"
 	"fmt"
+	"net/http"
 )
 
 //Folder Task folder
 type Folder struct {
-	id        string `json:"id"`
+	ID        string `json:"id"`
 	Name      string `json:"name"`
 	IsDefault bool   `json:"isDefaultFolder"`
 }
 
 //Folders Task folders from api
 type Folders struct {
-	Folders  []Folder `json:"value"`
-	nextLink string   `json:"@odata.nextLink"`
+	Client   *http.Client `json:"-"`
+	Value    []Folder     `json:"value"`
+	NextLink string       `json:"@odata.nextLink"`
 }
 
-//ListFolders lists all the folder for the user
-func (c Client) ListFolders() Folders {
-	// jdata := c.callAPI(URLS["ListFolders"].method, URLS["ListFolders"].url, nil)
-	// jd := *interface{}(jdata).(*map[string]interface{})
-	// folders := []Folder{}
-	// for _, f := range jd["value"].([]interface{}) {
-	// 	value := f.(map[string]interface{})
-	// 	folders = append(folders, Folder{
-	// 		id:        value["id"].(string),
-	// 		Name:      value["name"].(string),
-	// 		IsDefault: value["isDefaultFolder"].(bool),
-	// 	})
-	// }
-	resp := c.callAPI(URLS["ListFolders"].method, URLS["ListFolders"].url, nil)
-	var folders = Folders{}
-
-	defer resp.Body.Close()
-	err := json.NewDecoder(resp.Body).Decode(&folders)
+//List lists all the folder for the user
+func (f Folders) List() Folders {
+	// log.Println("Calling url - ", URLS["ListFolders"].url)
+	resp, err := f.Client.Get(URLS["ListFolders"].url)
 	if err != nil {
 		panic(err)
 	}
-	return folders
+	// log.Println("Response Status - ", resp.Status)
+	defer resp.Body.Close()
+	err = json.NewDecoder(resp.Body).Decode(&f)
+	if err != nil {
+		panic(err)
+	}
+	return f
 }
 
 //Print prints the folders struct to console
 func (f Folders) Print(detailed bool) {
 	var err error
-	for i, folder := range f.Folders {
-		if detailed {
+	for i, folder := range f.Value {
+		defaultFolder := ""
+		if folder.IsDefault {
+			defaultFolder = "(Default)"
+		}
 
-			_, err = fmt.Printf("%d - %s\nDefaut: %t ID: %s\n\n",
-				i+1, folder.Name, folder.IsDefault, folder.id)
+		if detailed {
+			_, err = fmt.Printf("%d - %s %s\n\tID: %s\n\n",
+				i+1, folder.Name, defaultFolder, folder.ID)
 		} else {
-			_, err = fmt.Printf("%d - %s\n", i+1, folder.Name)
+			_, err = fmt.Printf("%d - %s %s\n", i+1, folder.Name, defaultFolder)
 		}
 
 		if err != nil {
@@ -63,7 +61,7 @@ func (f Folders) Print(detailed bool) {
 //GetDefaultFolder loops over and get the default folders
 //TODO: Cache the default folder id
 func (f Folders) GetDefaultFolder() *Folder {
-	for _, folder := range f.Folders {
+	for _, folder := range f.Value {
 		if folder.IsDefault {
 			return &folder
 		}
