@@ -15,21 +15,21 @@ type Folder struct {
 
 //Folders Task folders from api
 type Folders struct {
-	Client   *http.Client `json:"-"`
-	Value    []Folder     `json:"value"`
-	NextLink string       `json:"@odata.nextLink"`
+	Value    []Folder `json:"value"`
+	NextLink string   `json:"@odata.nextLink"`
 }
 
-//List lists all the folder for the user
-func (f Folders) List() Folders {
+//ListFolders lists all the folder for the user
+func ListFolders(client *http.Client) *Folders {
 	// log.Println("Calling url - ", URLS["ListFolders"].url)
-	resp, err := f.Client.Get(URLS["ListFolders"].url)
+	resp, err := client.Get("https://graph.microsoft.com/beta/me/outlook/taskFolders")
 	if err != nil {
 		panic(err)
 	}
 	// log.Println("Response Status - ", resp.Status)
 	defer resp.Body.Close()
-	err = json.NewDecoder(resp.Body).Decode(&f)
+	f := new(Folders)
+	err = json.NewDecoder(resp.Body).Decode(f)
 	if err != nil {
 		panic(err)
 	}
@@ -69,6 +69,32 @@ func (f Folders) GetDefaultFolder() *Folder {
 	return nil
 }
 
-func (f Folder) GetTasks() Tasks {
-	return Tasks{}
+//GetFolderFromID gets you the folder given an ID
+func (f Folders) GetFolderFromID(id string) *Folder {
+	if id != "" {
+		for _, folder := range f.Value {
+			if folder.ID == id {
+				return &folder
+			}
+		}
+	}
+	return nil
+}
+
+//GetFolderFromName gets you the folder given an name pattern
+//TODO: Need to support regex in patterns
+func (f Folders) GetFolderFromName(namePattern string) *Folder {
+	if namePattern != "" {
+		for _, folder := range f.Value {
+			if folder.Name == namePattern {
+				return &folder
+			}
+		}
+	}
+	return nil
+}
+
+//GetTasks gets tasks under Folder f
+func (f Folder) GetTasks(client *http.Client) *Tasks {
+	return ListTasks(client, f.ID, true)
 }

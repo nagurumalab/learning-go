@@ -16,7 +16,7 @@ limitations under the License.
 package cmd
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/nagurumalab/learning-go/pani/mstodo"
 
@@ -34,7 +34,22 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("list tasks called")
+		var folder *mstodo.Folder
+		client := mstodo.NewClient()
+		folderName, _ := cmd.Flags().GetString("folder-name")
+		folderID, _ := cmd.Flags().GetString("folder-id")
+		folders := mstodo.ListFolders(client)
+		if folderID != "" {
+			folder = folders.GetFolderFromID(folderID)
+		}
+		if folder == nil && folderName != "" {
+			folder = folders.GetFolderFromName(folderName)
+		}
+		if folder == nil {
+			folder = folders.GetDefaultFolder()
+		}
+		log.Printf("Getting task of folder - %s", folder.ID)
+		folder.GetTasks(client).Print(false)
 	},
 }
 
@@ -49,7 +64,8 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// Move the newclient to a general place. may be pre run or init hook
-		mstodo.Folders{Client: mstodo.NewClient()}.List().Print(false)
+		detailed, _ := cmd.Flags().GetBool("detailed")
+		mstodo.ListFolders(mstodo.NewClient()).Print(detailed)
 	},
 }
 
@@ -67,4 +83,5 @@ func init() {
 	// listCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	listFolders.Flags().BoolP("detailed", "d", false, "Show details of the folders")
 	listTasks.Flags().StringP("folder-name", "n", "", "Name of the folder to list the tasks")
+	listTasks.Flags().StringP("folder-id", "i", "", "ID of the folder to list the tasks")
 }
