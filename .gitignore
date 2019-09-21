@@ -12,3 +12,4 @@
 *.out
 pani/token.json
 pani/pani
+scraper/*_cache/
