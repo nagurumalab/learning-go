@@ -3,7 +3,6 @@ package mstodo
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 )
 
@@ -50,7 +49,7 @@ func ListTasks(client *http.Client, folderID string, hideCompleted bool) *Tasks 
 	}
 	if folderID != "" {
 		reqURL := constructURL([]string{"taskFolders", folderID, "tasks"}, params)
-		log.Printf("Requesting url - %s", reqURL)
+		//log.Printf("Requesting url - %s", reqURL)
 		resp, err = client.Get(reqURL)
 		if err != nil {
 			panic(err)

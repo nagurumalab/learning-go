@@ -16,8 +16,6 @@ limitations under the License.
 package cmd
 
 import (
-	"log"
-
 	"github.com/nagurumalab/learning-go/pani/mstodo"
 
 	"github.com/spf13/cobra"
@@ -48,7 +46,7 @@ to quickly create a Cobra application.`,
 		if folder == nil {
 			folder = folders.GetDefaultFolder()
 		}
-		log.Printf("Getting task of folder - %s", folder.ID)
+		//log.Printf("Getting task of folder - %s", folder.ID)
 		folder.GetTasks(client).Print(false)
 	},
 }

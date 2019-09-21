@@ -18,20 +18,3 @@ func NewClient() *http.Client {
 	client, _ := userOAuthClient(ctx, config)
 	return client
 }
-
-// func (c *Client) callAPI(method string, url string, payload map[string]interface{}) *http.Response {
-// 	var resp *http.Response
-// 	var err error
-// 	switch method {
-// 	case "GET":
-// 		// log.Printf("Calling URL - %s\n", url)
-// 		resp, err = c.client.Get(url)
-// 		// log.Printf("Response - %s\n", resp.Status)
-// 	case "POST":
-// 		resp, err = c.client.Get(url)
-// 	}
-// 	if err != nil {
-// 		panic(err)
-// 	}
-// 	return resp
-// }
